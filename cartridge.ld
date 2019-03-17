@@ -2,7 +2,7 @@ SECTIONS
 {
     /* Cartridge ROM */
     . = 0;
-    .start : { start.o(.text) }
+    .vector : { vector.o(.text) }
     .rodata : { *(.rodata) }
 
     /* RAM area */

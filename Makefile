@@ -1,11 +1,12 @@
 CROSS_COMPILE ?= m68k-linux-gnu-
 
 AS = $(CROSS_COMPILE)as
-CC = $(CROSS_COMPILE)cc
+CC = $(CROSS_COMPILE)gcc
 LD = $(CROSS_COMPILE)ld
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-ASFLAGS = -mcpu=68000
+ASFLAGS = -mcpu=68000 -g
+CFLAGS = -mcpu=68000 -Og -g
 
 name = myrom
 bin = $(name).bin
@@ -16,7 +17,9 @@ all : $(bin)
 $(bin) : $(elf)
 	$(OBJCOPY) -O binary $< $@
 
-$(elf) : start.o
+objs = vector.o main.o
+
+$(elf) : $(objs)
 	$(LD) -o $@ $^ -Tcartridge.ld
 
 clean:
